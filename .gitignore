@@ -1,0 +1,33 @@
+# Maven
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+.eclipse/
+.project
+.classpath
+.settings/
+*.sts4-cache/
+*.vscode/
+.DS_Store
+
+# Spring Boot
+application-local.properties
+application-local.yml
+
+# Logs
+*.log
+logs/
+
+# OS
+Thumbs.db

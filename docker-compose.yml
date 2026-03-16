@@ -1,0 +1,64 @@
+version: '3.9'
+
+services:
+  # ─────────────────────────────────────────────
+  # PostgreSQL
+  # ─────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: auction_postgres
+    environment:
+      POSTGRES_DB: auction_db
+      POSTGRES_USER: auction_user
+      POSTGRES_PASSWORD: auction_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U auction_user -d auction_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─────────────────────────────────────────────
+  # Keycloak
+  # ─────────────────────────────────────────────
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0
+    container_name: auction_keycloak
+    command: start-dev
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/auction_db
+      KC_DB_USERNAME: auction_user
+      KC_DB_PASSWORD: auction_pass
+      KC_DB_SCHEMA: keycloak
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "8180:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # ─────────────────────────────────────────────
+  # Application
+  # ─────────────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: auction_app
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/auction_db
+      SPRING_DATASOURCE_USERNAME: auction_user
+      SPRING_DATASOURCE_PASSWORD: auction_pass
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

@@ -18,6 +18,7 @@ public class BidResponse {
     private BigDecimal amount;
     private Long customerId;
     private String customerEmail;
+    private Long auctionId;
     private BidStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

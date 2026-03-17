@@ -3,6 +3,7 @@ package com.auction.platform;
 import com.auction.platform.service.account.AccountNotFoundException;
 import com.auction.platform.service.auction.AuctionNotFoundException;
 import com.auction.platform.service.bid.BidNotFoundException;
+import com.auction.platform.service.bid.InsufficientBalanceException;
 import com.auction.platform.service.customer.CustomerNotFoundException;
 import com.auction.platform.service.item.ItemMediaLinkNotFoundException;
 import com.auction.platform.service.item.ItemNotFoundException;
@@ -48,6 +49,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccountNotFoundException.class)
     public ProblemDetail handleAccountNotFound(AccountNotFoundException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler(InsufficientBalanceException.class)
+    public ProblemDetail handleInsufficientBalance(InsufficientBalanceException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)

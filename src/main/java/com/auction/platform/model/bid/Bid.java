@@ -35,6 +35,9 @@ public class Bid {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
+    @Column(name = "auction_id")
+    private Long auctionId;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     @Builder.Default

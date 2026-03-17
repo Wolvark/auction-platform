@@ -18,4 +18,6 @@ public interface BidRepository extends JpaRepository<Bid, Long> {
     List<Bid> findByStatus(BidStatus status);
 
     List<Bid> findByItemNameIgnoreCase(String itemName);
+
+    List<Bid> findByAuctionIdAndStatus(Long auctionId, BidStatus status);
 }

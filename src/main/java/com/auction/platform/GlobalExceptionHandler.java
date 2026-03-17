@@ -1,10 +1,10 @@
 package com.auction.platform;
 
-import com.auction.platform.auction.AuctionNotFoundException;
-import com.auction.platform.bid.BidNotFoundException;
-import com.auction.platform.customer.CustomerNotFoundException;
-import com.auction.platform.item.ItemMediaLinkNotFoundException;
-import com.auction.platform.item.ItemNotFoundException;
+import com.auction.platform.service.auction.AuctionNotFoundException;
+import com.auction.platform.service.bid.BidNotFoundException;
+import com.auction.platform.service.customer.CustomerNotFoundException;
+import com.auction.platform.service.item.ItemMediaLinkNotFoundException;
+import com.auction.platform.service.item.ItemNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;

@@ -76,6 +76,7 @@ public class CustomerService {
                 .lastName(customer.getLastName())
                 .email(customer.getEmail())
                 .phone(customer.getPhone())
+                .username(customer.getUsername())
                 .createdAt(customer.getCreatedAt())
                 .updatedAt(customer.getUpdatedAt())
                 .build();

@@ -1,12 +1,15 @@
 package com.auction.platform;
 
+import com.auction.platform.service.account.AccountNotFoundException;
 import com.auction.platform.service.auction.AuctionNotFoundException;
 import com.auction.platform.service.bid.BidNotFoundException;
 import com.auction.platform.service.customer.CustomerNotFoundException;
 import com.auction.platform.service.item.ItemMediaLinkNotFoundException;
 import com.auction.platform.service.item.ItemNotFoundException;
+import com.auction.platform.service.payment.PaymentException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -42,9 +45,24 @@ public class GlobalExceptionHandler {
         return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
+    @ExceptionHandler(AccountNotFoundException.class)
+    public ProblemDetail handleAccountNotFound(AccountNotFoundException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ProblemDetail handleIllegalArgument(IllegalArgumentException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ProblemDetail handleBadCredentials(BadCredentialsException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "Invalid username or password");
+    }
+
+    @ExceptionHandler(PaymentException.class)
+    public ProblemDetail handlePayment(PaymentException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.PAYMENT_REQUIRED, ex.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

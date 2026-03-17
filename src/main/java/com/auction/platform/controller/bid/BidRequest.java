@@ -23,4 +23,7 @@ public class BidRequest {
 
     @NotNull(message = "Customer ID is required")
     private Long customerId;
+
+    @NotNull(message = "Auction ID is required")
+    private Long auctionId;
 }

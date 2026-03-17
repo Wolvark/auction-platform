@@ -76,6 +76,7 @@ public class AccountService {
                         .amount(bid.getAmount())
                         .customerId(bid.getCustomer().getId())
                         .customerEmail(bid.getCustomer().getEmail())
+                        .auctionId(bid.getAuctionId())
                         .status(bid.getStatus())
                         .createdAt(bid.getCreatedAt())
                         .updatedAt(bid.getUpdatedAt())
